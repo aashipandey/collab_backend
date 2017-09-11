@@ -33,13 +33,14 @@ public class ProfilePictureController {
 	
 	@RequestMapping(value="/uploadprofilepic",method=RequestMethod.POST)
 	public ResponseEntity<?> uploadProfilePic(@RequestParam CommonsMultipartFile image,HttpSession session){
-		User user=(User)session.getAttribute("user");
+		User user=(User)session.getAttribute("username");
 		
-		if(user==null)		{
+		if(user==null){
 			    Error error=new Error(3,"UnAuthorized user");
 				return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
 		} 
-		//String username=(String)session.getAttribute("username");
+		
+		User username=(User)session.getAttribute("username");
 		ProfilePicture profilePicture=new ProfilePicture();
 		profilePicture.setUsername(user.getUsername());
 		profilePicture.setImage(image.getBytes());
@@ -50,7 +51,8 @@ public class ProfilePictureController {
 	//http://localhost:8080/backend_project2/getimage/admin
 		@RequestMapping(value="/getimage/{username}", method=RequestMethod.GET)
 		public @ResponseBody byte[] getProfilePic(@PathVariable String username,HttpSession session){
-			User user=(User)session.getAttribute("user");
+		
+			User user=(User)session.getAttribute("username");
 			if(user==null)
 				return null;
 			else

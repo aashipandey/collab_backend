@@ -58,13 +58,14 @@ public class UserController {
 	public ResponseEntity<?> login(@RequestBody User user,HttpSession session)
 	{
 		User validuser=userDao.login(user);
+		//session.setAttribute("user", validuser);
 		if(validuser==null){ //invalid credentials
 			Error error=new Error(4,"Invalid Username/Password.. please enter valid username/pswd");
 			return new ResponseEntity<Error>(error,HttpStatus.UNAUTHORIZED);
 		}
 		validuser.setOnline(true);
 		userDao.updateUser(validuser); //update only the online status from 0 to 1
-		session.setAttribute("username",validuser.getUsername());
+		session.setAttribute("username",validuser);
 		
 		return new ResponseEntity<User>(validuser,HttpStatus.OK);
 	}
@@ -85,6 +86,7 @@ public class UserController {
 		return new ResponseEntity<Void>(HttpStatus.OK);
 		
 	}
+	
 	
 	@RequestMapping(value="/getuser",method=RequestMethod.GET)
 	public ResponseEntity<?> getUser(HttpSession session){

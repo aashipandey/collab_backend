@@ -28,12 +28,13 @@ public class ProfilePictureDaoImpl implements ProfilePictureDao {
 		session.close();
 	}
 	
-	/*public ProfilePicture uploadProfilePic()*/
+
 	
 	public ProfilePicture getProfilePic(String username) {
 		Session session=sessionFactory.openSession();
 		//select * from profilepicture where username='admin'
 		ProfilePicture profilePicture=(ProfilePicture)session.get(ProfilePicture.class, username);
+		session.flush();
 		session.close();
 		return profilePicture;
 	}

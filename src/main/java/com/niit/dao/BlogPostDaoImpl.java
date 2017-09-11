@@ -23,7 +23,7 @@ public class BlogPostDaoImpl implements BlogPostDao {
 	public void saveBlogPost(BlogPost blogPost) {		
 		Session session=sessionFactory.openSession();
 		session.save(blogPost);
-
+		session.flush();
 	}
 	
 	public List<BlogPost> getBlogPosts(int approved){
@@ -41,7 +41,7 @@ public class BlogPostDaoImpl implements BlogPostDao {
 		return blogPost;
 	}
 
-	@Override
+
 	public void updateBlogPost(BlogPost blogPost) {
 		Session session=sessionFactory.getCurrentSession();
 		System.out.println(blogPost.isApproved());
@@ -50,14 +50,14 @@ public class BlogPostDaoImpl implements BlogPostDao {
 		
 	}
 
-	@Override
+
 	public void addBlogcomment(BlogComment blogComment)
 	{
 		Session session=sessionFactory.getCurrentSession();
 		session.save(blogComment);//insert into blogcomment
 	}
 
-	@Override
+
 	public List<BlogComment> getAllBlogComments(int blogPostId) 
 	{
 		Session session=sessionFactory.getCurrentSession();
